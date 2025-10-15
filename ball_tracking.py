@@ -109,6 +109,6 @@ def main(video_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("使い方: python ball_tracking.py input_video.mp4")
+        print("使い方: python ball_tracking.py sample1.mp4")
     else:
         main(sys.argv[1])
