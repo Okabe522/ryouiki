@@ -23,7 +23,7 @@ def main(video_path):
     kf.measurementMatrix = np.array([[1,0,0,0],[0,1,0,0]], np.float32)
     kf.transitionMatrix  = np.array([[1,0,1,0],[0,1,0,1],[0,0,1,0],[0,0,0,1]], np.float32)
     kf.processNoiseCov   = np.eye(4, dtype=np.float32) * 0.03
-    #観測を優先→数字を小さく、kalmanの予測を優先→数字を大きく
+    #1.観測を優先→数字を小さく、kalmanの予測を優先→数字を大きく
     kf.measurementNoiseCov = np.eye(2, dtype=np.float32) * 80
 
     initialized = False
@@ -65,7 +65,7 @@ def main(video_path):
                 found = True
             else:
                 dist = np.hypot(cx - px, cy - py)
-                #観測値と予測値の距離の閾値、距離が遠すぎたら誤検出だと判断し観測値を採用しない
+                #2.観測値と予測値の距離の閾値、距離が遠すぎたら誤検出だと判断し観測値を採用しない
                 if dist <= 50: 
                     est = kf.correct(np.array([[cx],[cy]], np.float32))
                     tx, ty = int(est[0]), int(est[1])
@@ -81,7 +81,7 @@ def main(video_path):
                 pred = kf.predict()
                 tx, ty = int(pred[0]), int(pred[1])
                 predict_only_count += 1
-                #予測だけのフレームを何回まで許すか
+                #3.予測だけのフレームを何回まで許すか
                 if predict_only_count >= 10:
                     initialized = False
             else:
