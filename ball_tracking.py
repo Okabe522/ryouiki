@@ -1,3 +1,4 @@
+#3か所の閾値を変更してバレーボールを追跡するプログラムにしてください
 import cv2
 import numpy as np
 from ultralytics import YOLO
