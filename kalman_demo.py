@@ -9,7 +9,7 @@ def main():
     W, H = 800, 450
     canvas = np.zeros((H, W, 3), dtype=np.uint8)
 
-    # 本当の物体の初期位置・速度（今回は右下へ等速直線運動）
+    # 本当の物体の初期位置・速度（右下へ等速直線運動）
     true_x, true_y = 100.0, 100.0
     vx, vy = 3.5, 2.0
 
@@ -33,7 +33,7 @@ def main():
     kf.statePre = np.array([[true_x], [true_y], [vx], [vy]], dtype=np.float32)
     initialized = True
 
-    trail = []  # 推定位置の短い軌跡
+    trail = []  
 
     frame_id = 0
     while True:
@@ -44,12 +44,12 @@ def main():
         true_x += vx
         true_y += vy
 
-        # 画面内にバウンス
+        
         if true_x < 0 or true_x > W: vx *= -1; true_x = np.clip(true_x, 0, W)
         if true_y < 0 or true_y > H: vy *= -1; true_y = np.clip(true_y, 0, H)
 
         # 観測（たまに欠測させる）
-        has_measurement = (frame_id % 15 != 0)  # 15フレごとに欠測してみる
+        has_measurement = (frame_id % 15 != 0)  # 15フレごとに欠測
         if has_measurement:
             meas_x = true_x + np.random.randn() * 10.0
             meas_y = true_y + np.random.randn() * 10.0
